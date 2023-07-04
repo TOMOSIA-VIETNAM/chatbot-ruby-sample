@@ -1,13 +1,14 @@
-load_path = Dir["/vendor/bundle/ruby/3.2.0/gems/**/lib"]
+load_path = Dir['/vendor/bundle/ruby/3.2.0/gems/**/lib']
 $LOAD_PATH.unshift(*load_path)
 
-require "openai"
-require "json"
-require "pry"
+require 'openai'
+require 'json'
+require 'pry'
 require 'dotenv'
-require_relative "lib/gpt/client"
-require_relative "lib/gpt/document"
-require_relative "lib/gpt/finetune"
-require_relative "lib/gpt/prompt"
-require_relative "lib/gpt/chat"
+require 'csv'
+require 'tiktoken_ruby'
+require 'pinecone'
+
+Dir["lib/**/*.rb"].each { |file| require_relative file }
+
 Dotenv.load
