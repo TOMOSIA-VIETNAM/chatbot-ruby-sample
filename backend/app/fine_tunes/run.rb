@@ -1,7 +1,7 @@
-require_relative 'config'
+require_relative '../../config.rb'
 
 ### Start Training ###
-# training = GPT::Training.new('data/less-qlearsupport_prepared.jsonl', model_training: 'davinci', suffix: 'qlear-support')
+# training = App::FineTunes::Training.new('../../data/less-qlearsupport_prepared.jsonl', model_training: 'davinci', suffix: 'qlear-support')
 # training.call
 
 ### Check Document ###
@@ -29,23 +29,3 @@ loop do
 
   print "\n\nNhập câu hỏi (nhập exit để thoát): "
 end
-
-# puts "Xin cảm ơn!!!"
-
-### Test Chat ###
-# chat = GPT::Chat.new
-
-# puts "Xin chào! Tôi có thể giúp gì cho bạn?"
-# puts "===========================\n"
-# print "Nhập câu hỏi: "
-# loop do
-#   text = gets.chomp
-#   break if text.downcase == "exit"
-
-#   print "\n> Trả lời: "
-#   chat.say(text)
-
-#   print "\n\nNhập exit để thoát: "
-# end
-
-# puts "Xin cảm ơn!!!"
