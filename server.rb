@@ -38,7 +38,7 @@ module OpenAi
     post '/chat' do
       content_type :json
 
-      chatbot = Services::Embeddings::BuildChat.new(params['prompt'], max_token: 10_000)
+      chatbot = Services::Embeddings::BuildChat.new(params['prompt'], max_token: 12_500)
       chatbot.build
       { bot: chatbot.answers, status: 200 }.to_json
     end

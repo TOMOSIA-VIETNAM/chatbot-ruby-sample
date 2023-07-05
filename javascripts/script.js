@@ -1,9 +1,10 @@
 import bot from "./assets/bot.svg";
 import user from "./assets/user.svg";
 
-const form = document.querySelector("form");
-const btnSubmit = form.querySelector("button");
 const chatContainer = document.querySelector("#chat_container");
+const form          = document.querySelector("form");
+const btnSubmit     = form.querySelector("button");
+const textarea      = form.querySelector("textarea");
 
 let endpoint;
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -41,6 +42,14 @@ function typeText(element, text) {
   }, 20);
 }
 
+function disabledSubmit() {
+  btnSubmit.classList.add('btn-disabled')
+}
+
+function enabledSubmit() {
+  btnSubmit.classList.remove('btn-disabled')
+}
+
 // generate unique ID for each message div of bot
 // necessary for typing text effect for that specific reply
 // without unique ID, typing text will work on every element
@@ -63,9 +72,48 @@ function chatStripe(isAi, value, uniqueId) {
                     />
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
+                <button class="btn btn-copy d-none js-copy-message">
+                  <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                </button>
             </div>
         </div>
     `;
+}
+
+function handleCopyMessageAi() {
+  var copyButtons = document.querySelectorAll('.js-copy-message');
+  copyButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      // Tìm phạm vi gần nhất (.wrapper) chứa nút copyButton được click
+      var wrapper = button.closest('.wrapper');
+
+      // Tìm đối tượng chứa nội dung cần copy trong phạm vi wrapper
+      var message = wrapper.querySelector('.chat .message');
+
+      // Tạo một thẻ textarea tạm thời để chứa nội dung cần copy
+      var tempTextarea = document.createElement('textarea');
+      tempTextarea.value = message.textContent;
+
+      // Thêm thẻ textarea vào body và chọn toàn bộ nội dung
+      document.body.appendChild(tempTextarea);
+      tempTextarea.select();
+
+      // Copy nội dung vào clipboard
+      document.execCommand('copy');
+
+      // Xóa thẻ textarea tạm thời
+      document.body.removeChild(tempTextarea);
+
+      // Thêm lớp CSS tạm thời để thay đổi icon
+      button.classList.add('copied');
+
+      // Đặt thời gian chờ 2 giây
+      setTimeout(function() {
+        // Xóa lớp CSS tạm thời để trở về icon ban đầu
+        button.classList.remove('copied');
+      }, 1000);
+    });
+  });
 }
 
 const handleSubmit = async (e) => {
@@ -110,7 +158,12 @@ const handleSubmit = async (e) => {
     const data = await response.json();
     const parsedData = data.bot.trim(); // trims any trailing spaces/'\n'
 
+    disabledSubmit();
     typeText(messageDiv, parsedData);
+
+    handleCopyMessageAi();
+    // Show button copy messagr
+    messageDiv.closest('.chat').querySelector('.js-copy-message').classList.remove('d-none')
   } else {
     const err = await response.text();
 
@@ -120,18 +173,48 @@ const handleSubmit = async (e) => {
   }
 };
 
+// Handle submit form or press Enter
 form.addEventListener("submit", handleSubmit);
 form.addEventListener("keydown", (e) => {
-  if (e.keyCode === 13) {
+  if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
     handleSubmit(e);
   }
 });
 
+// Handle button submit
 form.addEventListener("keyup", (e) => {
-  if (form.querySelector('textarea').value.length) {
-    btnSubmit.classList.remove('btn-disabled')
+  if (textarea.value.length) {
+    enabledSubmit()
   } else {
-    btnSubmit.classList.add('btn-disabled')
+    disabledSubmit()
   }
 });
+
+// Handle keypress textarea
+textarea.addEventListener('input', function() {
+  // Đặt chiều cao của textarea thành scrollHeight (chiều cao toàn bộ nội dung)
+  this.style.height = 'auto';
+  this.style.height = this.scrollHeight + 'px';
+});
+
+textarea.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter' && event.shiftKey) {
+    // Ngăn sự kiện mặc định của phím Enter khi nhấn Shift
+    event.preventDefault();
+
+    // Thêm xuống hàng bằng cách thêm '\n' vào vị trí con trỏ
+    const start = this.selectionStart;
+    const end = this.selectionEnd;
+    this.value = this.value.substring(0, start) + '\n' + this.value.substring(end);
+
+    // Tự động co giãn chiều cao theo nội dung mới
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+  } else if (event.key === 'Enter') {
+    this.style.height = 'auto';
+  }
+});
+
+
+handleCopyMessageAi()

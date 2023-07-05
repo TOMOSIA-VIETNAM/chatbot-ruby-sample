@@ -1,14 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;400&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Alegreya Sans", sans-serif;
+  font-family: "Noto Sans,ui-sans-serif,system-ui,-apple-system,Ubuntu,sans-serif,Helvetica Neue,Arial", sans-serif;
 }
 
 body {
   background: #343541;
+  font-size: 15px;
+}
+
+.d-none {
+  display: none;
 }
 
 #app {
@@ -91,7 +96,8 @@ body {
   flex: 1;
 
   color: #dcdcdc;
-  font-size: 20px;
+  font-size: 15px;
+  line-height: 1.5em;
 
   max-width: 100%;
   overflow-x: scroll;
@@ -128,15 +134,20 @@ form {
 
   border-radius: .75rem;
   border: 1px solid rgba(32,33,35,.5);
+
+  box-shadow: 0 0 transparent, 0 0 transparent, 0 0 15px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 0 transparent, 0 0 transparent, 0 0 15px rgba(0,0,0,.1);
+  -webkit-box-shadow: 0 0 transparent, 0 0 transparent, 0 0 15px rgba(0,0,0,.1)
 }
 
 
 textarea {
   resize: none;
+  overflow: hidden;
   width: 100%;
 
   color: #fff;
-  font-size: 18px;
+  font-size: 15px;
 
   padding: 10px;
   background: transparent;
@@ -145,10 +156,14 @@ textarea {
   outline: none;
 }
 
-button {
+.btn {
   outline: 0;
   border: 0;
   cursor: pointer;
+  background: unset;
+}
+
+.btn-submit {
   background-color: rgb(25, 195, 125);
   border-radius: .375rem;
   width: 32px;
@@ -157,6 +172,22 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-copy {
+  color: #acacbd;
+  width: 32px;
+  height: 32px;
+}
+
+.btn-copy.copied::after {
+  content: "\2713"; /* Mã Unicode của biểu tượng checkmark */
+  transform: translate(-50%, -50%);
+  font-size: 1.5em;
+}
+
+.btn-copy.copied svg {
+  display: none;
 }
 
 form img {

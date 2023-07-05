@@ -13,3 +13,5 @@ node_modules
 /tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
+/javascripts/dist/*
+!/javascripts/dist/.keep
