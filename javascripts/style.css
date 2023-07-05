@@ -12,7 +12,7 @@ body {
 }
 
 #app {
-  width: 100vw;
+  width: 70%;
   height: 100vh;
   background: #343541;
 
@@ -20,6 +20,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  margin: 0 auto;
 }
 
 #chat_container {
@@ -121,10 +122,17 @@ form {
 
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
+
+  border-radius: .75rem;
+  border: 1px solid rgba(32,33,35,.5);
 }
 
+
 textarea {
+  resize: none;
   width: 100%;
 
   color: #fff;
@@ -141,10 +149,40 @@ button {
   outline: 0;
   border: 0;
   cursor: pointer;
-  background: transparent;
+  background-color: rgb(25, 195, 125);
+  border-radius: .375rem;
+  width: 32px;
+  height: 32px;
+  padding: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 form img {
   width: 30px;
   height: 30px;
+}
+
+form svg {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.btn-disabled {
+  background-color: unset;
+  pointer-events: none;
+}
+
+.btn-disabled svg {
+  color: #6b6c7b
+}
+
+
+@media only screen and (max-width: 768px) {
+  /* Thiết lập kích thước cho các thiết bị nhỏ hơn hoặc bằng 1440px */
+  #app {
+    width: 90%;
+  }
 }

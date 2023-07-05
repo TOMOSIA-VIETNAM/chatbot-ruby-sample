@@ -3,11 +3,13 @@ require_relative '../../config'
 module Services
   module Embeddings
     class BuildChat
-      attr_reader :question, :pinecone, :context, :raw_content, :records, :max_token
+      attr_reader :question, :pinecone, :context, :raw_content, :records, :max_token, :number_tokens
 
       def initialize(question_text, max_token: 4000)
-        @question = question_text.gsub(/[[:space:]]+/, ' ').strip
-        @max_token = max_token
+        @question      = question_text.gsub(/[[:space:]]+/, ' ').strip
+        @max_token     = max_token
+        @number_tokens = 0
+        @raw_content   = ''
       end
 
       def build
@@ -33,18 +35,16 @@ module Services
         @pinecone.query(
           vector,
           namespace: ENV['PINECONE_INDEX_NAMESPACE'],
-          top_k: 20,
           include_values: true,
-          include_metadata: true
+          include_metadata: true,
+          top_k: 1000,
         )
       end
 
       def build_context(records, question)
-        number_tokens = 0
-        @raw_content = ''
         records['matches'].each do |record|
-          number_tokens += record['metadata']['number_tokens'].to_i
-          break if number_tokens > max_token
+          @number_tokens += record['metadata']['number_tokens'].to_i
+          break if @number_tokens > max_token
 
           @raw_content += "\n#{record['metadata']['text']}"
         end

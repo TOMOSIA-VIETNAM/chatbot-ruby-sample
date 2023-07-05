@@ -2,13 +2,14 @@ import bot from "./assets/bot.svg";
 import user from "./assets/user.svg";
 
 const form = document.querySelector("form");
+const btnSubmit = form.querySelector("button");
 const chatContainer = document.querySelector("#chat_container");
 
 let endpoint;
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  endpoint = 'http://127.0.0.1:3000/chat'; // Host cho môi trường development
+  endpoint = 'http://127.0.0.1:3000/chat';
 } else {
-  endpoint = 'http://openai-server.qlear.net/chat'; // Host cho môi trường production
+  endpoint = 'http://openai-server.qlear.net/chat';
 }
 
 let loadInterval;
@@ -71,9 +72,12 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   const data = new FormData(form);
+  const prompt_text = data.get('prompt')
+
+  if(prompt_text.trim().length === 0) return false
 
   // user's chatstripe
-  chatContainer.innerHTML += chatStripe(false, data.get("prompt"));
+  chatContainer.innerHTML += chatStripe(false, prompt_text);
 
   // to clear the textarea input
   form.reset();
@@ -90,16 +94,6 @@ const handleSubmit = async (e) => {
 
   // messageDiv.innerHTML = "..."
   loader(messageDiv);
-
-  // const response = await fetch(endpoint, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     prompt: data.get("prompt"),
-  //   }),
-  // });
 
   const formData = new FormData();
   formData.append('prompt', data.get('prompt'));
@@ -127,8 +121,17 @@ const handleSubmit = async (e) => {
 };
 
 form.addEventListener("submit", handleSubmit);
-form.addEventListener("keyup", (e) => {
+form.addEventListener("keydown", (e) => {
   if (e.keyCode === 13) {
+    e.preventDefault();
     handleSubmit(e);
+  }
+});
+
+form.addEventListener("keyup", (e) => {
+  if (form.querySelector('textarea').value.length) {
+    btnSubmit.classList.remove('btn-disabled')
+  } else {
+    btnSubmit.classList.add('btn-disabled')
   }
 });

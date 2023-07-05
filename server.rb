@@ -21,7 +21,6 @@ module OpenAi
       enable :cross_origin
     end
 
-    # development settings
     configure :development do
       register Sinatra::Reloader
     end
@@ -38,7 +37,8 @@ module OpenAi
 
     post '/chat' do
       content_type :json
-      chatbot = Services::Embeddings::BuildChat.new(params['prompt'], max_token: 6_000)
+
+      chatbot = Services::Embeddings::BuildChat.new(params['prompt'], max_token: 10_000)
       chatbot.build
       { bot: chatbot.answers, status: 200 }.to_json
     end
