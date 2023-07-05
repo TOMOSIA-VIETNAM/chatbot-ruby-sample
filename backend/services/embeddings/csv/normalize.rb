@@ -1,11 +1,11 @@
 require_relative '../../../config.rb'
 
-module App
+module Services
   module Embeddings
     module Csv
       class Normalize
         attr_reader :filename
-        DIR_STORAGE = File.expand_path('.', 'publics/data/embeddings')
+        DIR_STORAGE = File.expand_path('.', 'public/data/embeddings')
 
         def initialize(filename)
           @filename = File.expand_path('.', filename)
@@ -43,4 +43,4 @@ module App
   end
 end
 
-App::Embeddings::Csv::Normalize.new('publics/data/originals/qlearsupport.csv').call
+App::Embeddings::Csv::Normalize.new('public/data/originals/qlearsupport.csv').call

@@ -1,6 +1,6 @@
 require_relative '../../config.rb'
 
-module App::FineTunes
+module Services::FineTunes
   class Training
     attr_reader :client, :filename, :file_id, :fine_tune_id, :model_training, :suffix
 

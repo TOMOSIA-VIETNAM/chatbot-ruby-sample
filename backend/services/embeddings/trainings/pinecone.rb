@@ -1,12 +1,12 @@
 require_relative '../../../config.rb'
 
 
-module App
+module Services
   module Embeddings
     module Trainings
       class Pinecone
         attr_reader :filename
-        DIR_STORAGE = File.expand_path('.', 'publics/data/embeddings')
+        DIR_STORAGE = File.expand_path('.', 'public/data/embeddings')
 
         def initialize(filename)
           @filename = File.expand_path('.', filename)
@@ -48,4 +48,4 @@ module App
   end
 end
 
-App::Embeddings::Trainings::Pinecone.new('publics/data/embeddings/qlearsupport-normalized-2023-07-05-00-04.csv').call
+App::Embeddings::Trainings::Pinecone.new('public/data/embeddings/qlearsupport-normalized-2023-07-05-00-04.csv').call

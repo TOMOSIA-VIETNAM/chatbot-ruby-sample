@@ -1,6 +1,6 @@
 require_relative '../../config'
 
-module App
+module Services
   module Embeddings
     class BuildChat
       attr_reader :question, :pinecone, :context, :raw_content, :records, :max_token
