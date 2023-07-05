@@ -1,14 +1,34 @@
-# ChatGPT App Clone
+# ChatGPT App Ruby
+
+## Run Server
+
+### Rackup
+
+```
+bundle exec rackup config.ru -p 3000
+```
+
+### Puma
+```
+bundle exec puma -e development -C config/puma.rb
+
+bundle exec puma -e production -C config/puma/production.rb
+```
+
+## Documents
+
+- Sinatra x Puma x Nginx: https://rooter.jp/rpa/sinatra-puma-nginx-api/
+
 ## what is chatGPT?
-ChatGPT is an AI chatbot system that OpenAI released in November to show off and test what a very large, powerful AI system can accomplish. 
-You can ask it countless questions and often will get an answer that's useful. 
+ChatGPT is an AI chatbot system that OpenAI released in November to show off and test what a very large, powerful AI system can accomplish.
+You can ask it countless questions and often will get an answer that's useful.
 For example, you can ask it encyclopedia questions like, "Explaining Newton's laws of motion."
 
 ### In short, what is chatGPT?
 ChatGPT is all overall social media web based application
 
 ### Features of ChatGPT
-This technology uses deep learning to produce human-like text that can respond to everything from stories, Mathematical solutions to theoretical essays. 
+This technology uses deep learning to produce human-like text that can respond to everything from stories, Mathematical solutions to theoretical essays.
 ChatGPT can remember earlier comments in a conversation and recount them to the user with its unique memory.
 
 #### I have built ChatGPT App Clone AI using these technologies:
