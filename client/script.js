@@ -4,6 +4,13 @@ import user from "./assets/user.svg";
 const form = document.querySelector("form");
 const chatContainer = document.querySelector("#chat_container");
 
+let endpoint;
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  endpoint = 'http://127.0.0.1:3000/chat'; // Host cho môi trường development
+} else {
+  endpoint = 'http://openai-server.qlear.net/chat'; // Host cho môi trường production
+}
+
 let loadInterval;
 
 function loader(element) {
@@ -84,14 +91,22 @@ const handleSubmit = async (e) => {
   // messageDiv.innerHTML = "..."
   loader(messageDiv);
 
-  const response = await fetch("http://localhost:5000", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      prompt: data.get("prompt"),
-    }),
+  // const response = await fetch(endpoint, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     prompt: data.get("prompt"),
+  //   }),
+  // });
+
+  const formData = new FormData();
+  formData.append('prompt', data.get('prompt'));
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    body: formData,
   });
 
   clearInterval(loadInterval);

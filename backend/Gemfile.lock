@@ -87,6 +87,7 @@ GEM
       rack-protection (= 3.0.6)
       sinatra (= 3.0.6)
       tilt (~> 2.0)
+    sinatra-cross_origin (0.4.0)
     tiktoken_ruby (0.0.5-x86_64-darwin)
     tilt (2.2.0)
     zeitwerk (2.6.8)
@@ -103,6 +104,7 @@ DEPENDENCIES
   ruby-openai
   sinatra (~> 3.0)
   sinatra-contrib (~> 3.0)
+  sinatra-cross_origin (~> 0.4.0)
   tiktoken_ruby (~> 0.0.5)
 
 BUNDLED WITH

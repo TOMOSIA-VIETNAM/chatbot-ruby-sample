@@ -5,8 +5,8 @@ module Services
     class BuildChat
       attr_reader :question, :pinecone, :context, :raw_content, :records, :max_token
 
-      def initialize(question, max_token: 4000)
-        @question = question
+      def initialize(question_text, max_token: 4000)
+        @question = question_text.gsub(/[[:space:]]+/, ' ').strip
         @max_token = max_token
       end
 

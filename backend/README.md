@@ -3,7 +3,7 @@
 ### Development
 
 ```
-bundle exec rackup config.ru -p 4567
+bundle exec rackup config.ru -p 3000
 ```
 
 ### Production
