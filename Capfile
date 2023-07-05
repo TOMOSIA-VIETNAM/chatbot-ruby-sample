@@ -27,8 +27,8 @@ install_plugin Capistrano::SCM::Git
 #   https://github.com/capistrano/rails
 #
 require "capistrano/rvm"
-require "capistrano/puma"
-install_plugin Capistrano::Puma
+# require "capistrano/puma"
+# install_plugin Capistrano::Puma
 
 # require 'capistrano/rails'
 # require "capistrano/rbenv"

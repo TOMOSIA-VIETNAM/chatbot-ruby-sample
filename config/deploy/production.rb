@@ -8,16 +8,8 @@ set :repo_url, "git@github.com:TOMOSIA-VIETNAM/chatgpt-ruby-sample.git"
 set :branch, 'main'
 # ask :branch, nil || :main
 
-# set :ruby_dir, "#{fetch(:deploy_to)}/backend"
-# set :bundle_dir, "#{fetch(:ruby_dir)}/vendor/bundle"
-# set :bundle_path, fetch(:bundle_dir)
-# # set :bundle_flags, '--deployment --quiet'
-# set :bundle_without, %w{development test}.join(' ')
-# set :bundle_gemfile, "#{fetch(:ruby_dir)}"
-# set :bundle_jobs, 4
-
 # Default value for linked_dirs is []
-# append :linked_files, 'config/credentials/staging.key', 'config/database.yml'
+append :linked_files, '.env'
 
 after 'deploy:finished', 'puma_action:restart'
 

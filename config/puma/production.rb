@@ -1,19 +1,21 @@
 #!/usr/bin/env puma
 
-root = "#{Dir.getwd}"
+root = "/home/ubuntu/openai/current"
+shared_path = "/home/ubuntu/openai/shared"
+
 directory "#{root}"
-rackup "#{root}/current/config.ru"
+rackup "#{root}/config.ru"
 environment 'production'
 
 tag ''
 
-pidfile "#{root}/shared/tmp/pids/puma.pid"
-state_path "#{root}/shared/tmp/pids/puma.state"
-stdout_redirect '#{root}/shared/log/puma_access.log', '#{root}/shared/log/puma_error.log', true
+pidfile "#{shared_path}/tmp/pids/puma.pid"
+state_path "#{shared_path}/tmp/pids/puma.state"
+stdout_redirect "#{shared_path}/log/puma.log", "#{shared_path}/log/puma.log", true
 
 threads 0, 2
 
-bind 'unix://#{root}/shared/tmp/sockets/puma.sock'
+bind "unix://#{shared_path}/tmp/sockets/puma.sock"
 
 workers 0
 
@@ -23,5 +25,5 @@ prune_bundler
 
 on_restart do
   puts 'Refreshing Gemfile'
-  ENV["BUNDLE_GEMFILE"] = "#{root}/current/Gemfile"
+  ENV["BUNDLE_GEMFILE"] = "#{root}/Gemfile"
 end
