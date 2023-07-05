@@ -15,7 +15,7 @@ module.exports = function (shipit) {
       deployTo: '/home/ubuntu/openai/client',
       servers: 'ubuntu@54.238.12.231',
       key: '~/.ssh/qr_code/qlear-release.pem',
-      dirToCopy: '../client/dist',
+      dirToCopy: '../dist',
     },
     server: {
       deployTo: '/home/ubuntu/openai/server',

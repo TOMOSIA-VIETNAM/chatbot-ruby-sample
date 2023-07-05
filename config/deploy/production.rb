@@ -5,7 +5,7 @@ set :deploy_to, "/home/ubuntu/openai"
 set :application, 'openai'
 set :repo_url, "git@github.com:TOMOSIA-VIETNAM/chatgpt-ruby-sample.git"
 
-set :branch, 'main'
+set :branch, 'master'
 # ask :branch, nil || :main
 
 # Default value for linked_dirs is []
