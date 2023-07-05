@@ -66,6 +66,7 @@ module Services
 ---
 
 質問: #{question}
+回答をMarkdown形式で行う。:
 TEMPLATE
       end
     end

@@ -10,6 +10,7 @@
 body {
   background: #343541;
   font-size: 15px;
+  font-family: "Noto Sans,ui-sans-serif,system-ui,-apple-system,Ubuntu,sans-serif,Helvetica Neue,Arial", sans-serif;
 }
 
 .d-none {

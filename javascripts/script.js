@@ -1,6 +1,8 @@
 import bot from "./assets/bot.svg";
 import user from "./assets/user.svg";
+import MarkdownIt from 'markdown-it';
 
+const md = new MarkdownIt();
 const chatContainer = document.querySelector("#chat_container");
 const form          = document.querySelector("form");
 const btnSubmit     = form.querySelector("button");
@@ -29,17 +31,54 @@ function loader(element) {
   }, 300);
 }
 
-function typeText(element, text) {
-  let index = 0;
+// function typeText(element, text) {
+//   let index = 0;
 
-  let interval = setInterval(() => {
-    if (index < text.length) {
-      element.innerHTML += text.charAt(index);
-      index++;
-    } else {
-      clearInterval(interval);
+//   let interval = setInterval(() => {
+//     if (index < text.length) {
+//       element.innerHTML += text.charAt(index);
+//       index++;
+//     } else {
+//       clearInterval(interval);
+//     }
+//   }, 20);
+// }
+
+
+function typeText(element, text) {
+  var aText = Array.isArray(text) ? text : [text];
+  var iSpeed = 35; // time delay of print out
+  var iIndex = 0; // start printing array at this position
+  var iArrLength = aText[0].length; // the length of the text array
+  var iScrollAt = 20; // start scrolling up at this many lines
+  var iTextPos = 0; // initialize text position
+  var sContents = ''; // initialize contents variable
+  var iRow; // initialize current row
+
+  function type() {
+    sContents = '';
+    iRow = Math.max(0, iIndex - iScrollAt);
+
+    while (iRow < iIndex) {
+      sContents += aText[iRow++] + '<br />';
     }
-  }, 20);
+    // element.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + "_";
+    element.innerHTML = sContents + aText[iIndex].substring(0, iTextPos);
+
+    if (iTextPos++ === iArrLength) {
+      iTextPos = 0;
+      iIndex++;
+
+      if (iIndex !== aText.length) {
+        iArrLength = aText[iIndex].length;
+        setTimeout(type, 500);
+      }
+    } else {
+      setTimeout(type, iSpeed);
+    }
+  }
+
+  type();
 }
 
 function disabledSubmit() {
@@ -71,7 +110,7 @@ function chatStripe(isAi, value, uniqueId) {
                       alt="${isAi ? "bot" : "user"}"
                     />
                 </div>
-                <div class="message" id=${uniqueId}>${value}</div>
+                <div class="message js-message markdown-body" id=${uniqueId}>${value}</div>
                 <button class="btn btn-copy d-none js-copy-message">
                   <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 </button>
@@ -88,7 +127,7 @@ function handleCopyMessageAi() {
       var wrapper = button.closest('.wrapper');
 
       // Tìm đối tượng chứa nội dung cần copy trong phạm vi wrapper
-      var message = wrapper.querySelector('.chat .message');
+      var message = wrapper.querySelector('.chat .js-message');
 
       // Tạo một thẻ textarea tạm thời để chứa nội dung cần copy
       var tempTextarea = document.createElement('textarea');
@@ -159,7 +198,7 @@ const handleSubmit = async (e) => {
     const parsedData = data.bot.trim(); // trims any trailing spaces/'\n'
 
     disabledSubmit();
-    typeText(messageDiv, parsedData);
+    typeText(messageDiv, md.render(parsedData));
 
     handleCopyMessageAi();
     // Show button copy messagr
