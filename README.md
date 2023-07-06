@@ -1,6 +1,8 @@
 ## Chatbot App
 
-### 1. Technologies:
+<img width="1047" alt="image" src="https://github.com/TOMOSIA-VIETNAM/chatbot-ruby-sample/assets/77431580/3768166b-5be2-4d82-8618-a6d8374880de">
+
+### Technologies:
 
 1. Fontend: HTML, CSS, JS
 
