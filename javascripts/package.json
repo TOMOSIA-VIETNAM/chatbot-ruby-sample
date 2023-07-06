@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "golive": "npm run build && npx shipit client deploy",
-    "deploy": "npx shipit client deploy"
+    "deploy": "npm run build && npx shipit client deploy",
+    "only-deploy": "npx shipit client deploy"
   },
   "devDependencies": {
     "vite": "^4.0.0"
