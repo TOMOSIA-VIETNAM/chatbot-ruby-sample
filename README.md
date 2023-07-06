@@ -1,6 +1,6 @@
 ## Chatbot App
 
-### Technologies:
+### 1. Technologies:
 
 1. Fontend: HTML, CSS, JS
 
@@ -8,9 +8,9 @@
 
 3. Backend (Ruby Sinatra): Sinatra, Puma, OpenAI API, Ruby 3.2.1
 
-### Start App
+### 2. Start App
 
-#### Client
+#### 2.1 Client
 
 ```bash
 cd javascripts
@@ -24,7 +24,7 @@ npm run build # Package into static files
 npm run preview # Start server to access static files after building
 ```
 
-#### Server Ruby on Sinatra
+#### 2.2 Server Ruby on Sinatra
 
 **Install libraries**
 ```
@@ -55,7 +55,7 @@ bundle exec rackup config.ru -E production -p 3000
 bundle exec puma -e production -C config/puma/production.rb
 ```
 
-#### Deployment
+### 3. Deployment
 
 **For Client**
 
@@ -72,6 +72,28 @@ npm run only-deploy # It will only deploy not build
 ```
 bundle exec cap production deploy # Default branch master
 ```
+
+### 4. Training data vector
+
+1. Standardize CSV data including vector data
+
+```bash
+bundle exec ruby services/embeddings/csv/normalize.rb
+```
+
+2. Perform training and save vectors to the database (pinecone)
+
+```bash
+bundle exec ruby services/embeddings/trainings/pinecone.rb
+```
+
+3. Run the test
+
+```bash
+bundle exec ruby services/embeddings/testing.rb
+```
+
+**Use file ```services/embeddings/build_chat.rb``` to pass the prompt and retrieve the response.**
 
 ## Documents
 
