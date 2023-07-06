@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+system('bundle exec rackup config.ru -E development -p 3000')

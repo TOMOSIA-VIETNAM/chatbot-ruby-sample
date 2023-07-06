@@ -1,0 +1,29 @@
+## SETUP:
+#
+# sudo vi /etc/systemd/system/openai_puma.service
+#
+###
+
+[Unit]
+Description=OpenAI Puma service
+After=network.target
+
+[Service]
+Type=simple
+Environment=RAILS_ENV=production
+WorkingDirectory=/home/ubuntu/openai/current
+User=ubuntu
+#Group=sudo
+#UMask=0002
+PIDFile=/home/ubuntu/openai/current/tmp/pids/puma.pid
+
+ExecStart=/bin/bash -l -c 'bundle exec puma -C /home/ubuntu/openai/current/config/puma/production.rb'
+ExecStop=/bin/bash -l -c 'kill -s QUIT `cat /home/ubuntu/openai/current/tmp/pids/puma.pid'
+
+ExecReload=/bin/kill -HUP $MAINPID
+# KillMode=process
+# KillSignal=SIGQUIT
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

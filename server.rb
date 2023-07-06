@@ -1,13 +1,11 @@
 # Docs: https://blog.appsignal.com/2023/05/31/how-to-use-sinatra-to-build-a-ruby-application.html
 
 require 'bundler'
+require './services/embeddings/build_chat.rb'
 Bundler.require
 
-require 'sinatra'
-require 'sinatra/cross_origin'
-
-require './services/embeddings/build_chat.rb'
-
+# require 'sinatra/custom_logger'
+# require 'logger'
 module OpenAi
   class Server < Sinatra::Base
     set :bind, '0.0.0.0'
@@ -17,6 +15,10 @@ module OpenAi
 
       set :root, File.dirname(__FILE__)
       set :public_folder, 'public'
+
+      file = File.new("#{root}/log/#{environment}.log", 'a+')
+      file.sync = true
+      use Rack::CommonLogger, file
 
       enable :cross_origin
     end
