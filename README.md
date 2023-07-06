@@ -2,21 +2,11 @@
 
 ### Technologies:
 
-1. Fontend
-  a. HTML
-  b. CSS
-  c. JS
+1. Fontend: HTML, CSS, JS
 
-2. Backend (NodeJS)
-  a. ExpressJS
-  b. Cors
-  c. OpenAI API
+2. Backend (NodeJS): ExpressJS, Cors, OpenAI API
 
-3. Backend (Ruby Sinatra)
-  a. Sinatra
-  b. Puma
-  c. OpenAI API
-  d. Ruby 3.2.1
+3. Backend (Ruby Sinatra): Sinatra, Puma, OpenAI API, Ruby 3.2.1
 
 ### Start App
 
@@ -32,14 +22,6 @@ npm run dev # Start with development environment
 npm run build # Package into static files
 
 npm run preview # Start server to access static files after building
-```
-
-#### Server NodeJS
-
-```
-cd javascripts
-
-node server.js # Start server
 ```
 
 #### Server Ruby on Sinatra
